@@ -13,12 +13,22 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
     }),
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        //自动导入主题样式并进行覆盖
+        additionalData: `
+          @use "@/styles/element/index.scss" as *;
+        `
+      }
     }
   }
 })
