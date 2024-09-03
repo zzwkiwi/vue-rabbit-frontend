@@ -1,7 +1,8 @@
 <script setup>
-  import { getApiTest} from '@/apis/testApi'
+  // import { getApiTest} from '@/apis/testApi'
 import { RouterView } from 'vue-router';
-  getApiTest()
+  // console.log(getApiTest());
+  
 </script>
 
 <template>

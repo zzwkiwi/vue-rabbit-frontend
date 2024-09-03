@@ -1,3 +1,3 @@
 <template>
-  <div>我是home</div>
+  <div style="height: 1200px;">我是home</div>
 </template>
