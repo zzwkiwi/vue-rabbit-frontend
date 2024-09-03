@@ -1,10 +1,12 @@
 <script setup>
-
+  import { getApiTest} from '@/apis/testApi'
+import { RouterView } from 'vue-router';
+  getApiTest()
 </script>
 
 <template>
   
-  <el-button type="primary">primary</el-button>
+  <RouterView/>
 </template>
 
 <style scoped>

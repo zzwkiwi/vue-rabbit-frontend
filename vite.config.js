@@ -27,6 +27,7 @@ export default defineConfig({
         //自动导入主题样式并进行覆盖
         additionalData: `
           @use "@/styles/element/index.scss" as *;
+          @use "@/styles/var.scss" as *;
         `
       }
     }
