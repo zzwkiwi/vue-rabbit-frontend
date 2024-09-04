@@ -8,3 +8,13 @@ export const getCategoryAPI = (id) => {
     }
   })
 }
+
+export function getBannerImgAPI(params = {}) {
+  const { distributionSite = '1' } = params
+  return httpInstance({
+    url: '/home/banner',
+    params: {
+      distributionSite,
+    }
+  })
+}
