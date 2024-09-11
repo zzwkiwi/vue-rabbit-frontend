@@ -2,6 +2,7 @@
 import { getGoodsAPI } from '@/apis/detail';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import GoodHot from './components/GoodHot.vue';
 
 const goods = ref({})
 const route = useRoute()
@@ -112,13 +113,16 @@ onMounted(()=>{
                     </li>
                   </ul>
                   <!-- 图片 -->
-                  <img v-for="img in goods.details.pictures" :key="img" :src="img" alt="">
+                  <img v-for="img in goods.details.pictures" :key="img" v-img-lazy="img" alt="">
                 </div>
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
-
+              <!-- 24小时热榜 -->
+              <GoodHot :type="1" />
+              <!-- 周热榜 -->
+              <GoodHot :type="2" />
             </div>
           </div>
         </div>
