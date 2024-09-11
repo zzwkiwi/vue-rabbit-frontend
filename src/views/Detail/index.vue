@@ -9,8 +9,15 @@ const route = useRoute()
 const getgoods = async () =>{
   const res = await getGoodsAPI(route.params.id)
   goods.value = res.result
-  console.log(goods.value);
+  // console.log(goods.value);
 }
+
+//sku组件变化
+const skuChange = (sku) =>{
+  console.log(sku);
+  
+}
+
 onMounted(()=>{
   getgoods()
 })
@@ -36,7 +43,7 @@ onMounted(()=>{
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-
+              <XtxImageView :image-list="goods.mainPictures" />
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -85,7 +92,7 @@ onMounted(()=>{
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="goods" @change="skuChange"/>
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->

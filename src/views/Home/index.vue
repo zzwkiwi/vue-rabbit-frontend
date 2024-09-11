@@ -15,11 +15,4 @@ import HomeProduct from './components/HomeProduct.vue'
   <HomeNew />
   <HomeHot />
   <HomeProduct />
-  <!-- <HomePanel title="新鲜好物" sub-title="草鸡帅">
-    <div>我有多帅</div>
-  </HomePanel>
-  <HomePanel title="人气推荐" sub-title="草鸡帅">
-    <div>你就有多晒</div>
-  </HomePanel> -->
-
 </template>
