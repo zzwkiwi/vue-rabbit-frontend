@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-
+import { useUserStore } from '@/stores/user'
 
 const httpInstance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -8,6 +8,11 @@ const httpInstance = axios.create({
 })
 // axios请求拦截器
 httpInstance.interceptors.request.use(config => {
+  const useStore = useUserStore()
+  const token = useStore.userInfo.token
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 }, e => Promise.reject(e))
 
