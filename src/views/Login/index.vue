@@ -1,10 +1,20 @@
 <script setup>
 
-import { ref } from 'vue';
+import { ref } from 'vue'
+// import { loginAPI } from '@/apis/user'
+import 'element-plus/es/components/message/style/css'
+import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+// import useStore from 'element-plus/es/components/table/src/store';
+
+const useStore = useUserStore()
+
 //表单校验（账户名+密码）
 const form = ref({
-  account: '',
-  password: ''
+  account: 'heima282',
+  password: 'hm#qd@23!',
+  agree: true
 })
 //规则对象
 const rules = {
@@ -15,7 +25,39 @@ const rules = {
   { required: true, message: '密码不能为空', trigger: 'blur' },
   { min: 6, max: 14, message: '密码长度为6~14位', trigger: 'blur' },
 
+  ],
+  agree:[
+    {
+      validator: (rule, value, callback) =>{
+        console.log(value);
+        if(value){
+          callback()
+        }else{
+          callback(new Error('请勾选协议'))
+        }
+      }
+    }
   ]
+}
+//统一校验
+const formRef = ref(null)
+const router = useRouter()
+const doLogin = () => {
+  const { account, password } = form.value
+  formRef.value.validate(async (valid) => {
+    console.log(valid);
+    
+    if(valid){
+      // TODO LOGIN
+      // const res = await loginAPI({ account, password })
+      // console.log(res);
+      await useStore.getUserInfo({ account, password })
+      //提示用户
+      ElMessage({ type: 'success', message: '登录成功' })
+      //跳转首页
+      router.replace({path:'/'})
+    }
+  })
 }
 </script>
 
@@ -41,7 +83,7 @@ const rules = {
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form :model="form" :rules="rules" label-position="right" label-width="60px"
+            <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px"
               status-icon>
               <el-form-item prop="account"  label="账户">
                 <el-input v-model="form.account" />
@@ -49,12 +91,12 @@ const rules = {
               <el-form-item prop="password" label="密码">
                 <el-input type="password" v-model="form.password" />
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox  size="large">
+              <el-form-item prop="agree" label-width="22px">
+                <el-checkbox  size="large" v-model="form.agree">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
             </el-form>
           </div>
         </div>
