@@ -29,6 +29,10 @@ export const useCartStore = defineStore('cart', () => {
       }
     })
   }
+  //修改全部selected
+  const allCheck = (selected) => {
+    cartList.value.forEach(item => item.selected = selected)
+  }
 
 
   //getter
@@ -36,13 +40,25 @@ export const useCartStore = defineStore('cart', () => {
 
   const totalPrice = computed(() => cartList.value.reduce((p, n) => p + n.count * n.price, 0).toFixed(2))
 
+  const isAll = computed(() => cartList.value.every(item => item.selected === true))
+
+  const totalSelectedCount = computed(() => cartList.value.filter(item => item.selected).reduce((p, n) => p + n.count, 0))
+
+  const totalSelectedPrice = computed(() => cartList.value.filter(item => item.selected).reduce((p, n) => p + n.count * n.price, 0))
+
+
+
   return {
     cartList,
     totalCount,
     totalPrice,
+    isAll,
+    totalSelectedCount,
+    totalSelectedPrice,
     addCart,
     delCart,
-    updateCartSelected
+    updateCartSelected,
+    allCheck,
   }
 },
   {

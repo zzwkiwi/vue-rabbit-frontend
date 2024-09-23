@@ -1,10 +1,16 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore';
+// import { ref } from 'vue';
 const cartStore = useCartStore()
 const singleCheck = (selected, i) =>{
   console.log(selected)
   cartStore.updateCartSelected(selected,i.skuId)
 }
+const allCheck = (selected)=>{
+  console.log(selected)
+  cartStore.allCheck(selected)
+}
+
 </script>
 
 <template>
@@ -15,7 +21,7 @@ const singleCheck = (selected, i) =>{
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox :checked="selected" @change="(selected)=>allCheck(selected,i)"  />
+                <el-checkbox :model-value="cartStore.isAll"  @change="allCheck"  />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
@@ -28,7 +34,7 @@ const singleCheck = (selected, i) =>{
           <tbody>
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
-                <el-checkbox :checked="i.selected" @change="(selected)=>singleCheck(selected,i)" />
+                <el-checkbox :model-value="i.selected" @change="(selected)=>singleCheck(selected,i)" />
               </td>
               <td>
                 <div class="goods">
@@ -75,8 +81,8 @@ const singleCheck = (selected, i) =>{
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
-          共 10 件商品，已选择 2 件，商品合计：
-          <span class="red">¥ 200.00 </span>
+          共 {{ cartStore.totalCount }} 件商品，已选择 {{ cartStore.totalSelectedCount}} 件，商品合计：
+          <span class="red">¥ {{ cartStore.totalSelectedPrice.toFixed(2)}} </span>
         </div>
         <div class="total">
           <el-button size="large" type="primary" >下单结算</el-button>
